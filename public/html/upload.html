@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Upload</title>
+    <!-- Include Firebase JavaScript SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js"></script>
+    <!-- Include your custom script -->
+    <script src="js/script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Video Upload Page</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Upload Your Video</h2>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" name="videoFile" id="videoFile" accept="video/*">
+                <button type="submit">Upload Video</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Your Website. All rights reserved.</p>
+    </footer>
+</body>
+</html>

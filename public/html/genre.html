@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse by Genre</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Include Plyr.js library -->
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.3/plyr.css">
+</head>
+<body>
+    <header>
+        <h1>Browse by Genre</h1>
+    </header>
+
+    <main>
+        <!-- Genre dropdown container -->
+        <div class="genre-dropdown-container">
+            <select class="genre-dropdown" id="genreDropdown">
+                <option value="Pop">Pop</option>
+                <option value="Hip-hop">Hip-hop</option>
+                <option value="Cinematic">Cinematic</option>
+                <option value="Rock">Rock</option>
+                <!-- Add more genre options as needed -->
+            </select>
+            <!-- Genre options dropdown -->
+            <div class="genre-options" id="genreOptions">
+                <option value="Pop">Pop</option>
+                <option value="Hip-hop">Hip-hop</option>
+                <option value="Cinematic">Cinematic</option>
+                <option value="Rock">Rock</option>
+                <!-- Add more genre options as needed -->
+            </div>
+        </div>
+
+        <section id="videoPlayerSection">
+            <h2>Video Player</h2>
+            <video id="player" controls></video>
+        </section>
+
+        <section id="songList">
+            <h2>Songs</h2>
+            <!-- Songs will be dynamically populated here based on selected genre -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Your Website. All rights reserved.</p>
+    </footer>
+
+    <!-- Include Plyr.js library -->
+    <script src="https://cdn.plyr.io/3.7.3/plyr.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
