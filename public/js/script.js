@@ -46,4 +46,17 @@ document.addEventListener("DOMContentLoaded", function() {
             }],
         };
     }
+
+    // Redirect user to upload.html after signing up or signing in
+    const signUpForm = document.getElementById('signUpForm');
+    signUpForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        window.location.href = 'upload.html';
+    });
+
+    const signInForm = document.getElementById('signInForm');
+    signInForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        window.location.href = 'upload.html';
+    });
 });
