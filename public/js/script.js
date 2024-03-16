@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const player = new Plyr('#player');
-
     // Initialize Firebase Storage
     const storage = firebase.storage();
 
@@ -86,6 +84,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function to play the selected song
     function playSong(songUrl) {
+        // Initialize Plyr player
+        const player = new Plyr('#player');
+        
         // Set the source of the Plyr player to the selected song URL
         player.source = {
             type: 'video',
@@ -96,3 +97,4 @@ document.addEventListener("DOMContentLoaded", function() {
         };
     }
 });
+
