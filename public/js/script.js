@@ -8,22 +8,24 @@ document.addEventListener("DOMContentLoaded", function() {
         fetchSongsByGenre(selectedGenre);
     });
 
-    // Function to fetch songs by genre
+    // Function to fetch songs by genre using AJAX
     function fetchSongsByGenre(genre) {
-        // Clear previous songs
+        fetch(`/api/songs?genre=${genre}`)
+            .then(response => response.json())
+            .then(songs => {
+                displaySongs(songs);
+            })
+            .catch(error => {
+                console.error('Error fetching songs:', error);
+            });
+    }
+
+    // Function to display the list of songs
+    function displaySongs(songs) {
         const songList = document.getElementById('songList');
         songList.innerHTML = '';
 
-        // Simulated data for songs (replace this with your actual data)
-        const mockSongs = [
-            { name: 'Song 1', url: 'https://example.com/song1.mp4' },
-            { name: 'Song 2', url: 'https://example.com/song2.mp4' },
-            { name: 'Song 3', url: 'https://example.com/song3.mp4' }
-            // Add more songs as needed
-        ];
-
-        // Create HTML elements for each song and append them to the song list
-        mockSongs.forEach(song => {
+        songs.forEach(song => {
             const songItem = document.createElement('div');
             songItem.textContent = song.name; // Display song name
             songList.appendChild(songItem);
@@ -46,17 +48,4 @@ document.addEventListener("DOMContentLoaded", function() {
             }],
         };
     }
-
-    // Redirect user to upload.html after signing up or signing in
-    const signUpForm = document.getElementById('signUpForm');
-    signUpForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        window.location.href = 'upload.html';
-    });
-
-    const signInForm = document.getElementById('signInForm');
-    signInForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        window.location.href = 'upload.html';
-    });
 });
