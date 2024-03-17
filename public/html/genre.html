@@ -52,6 +52,21 @@
 
     <!-- Include Plyr.js library -->
     <script src="https://cdn.plyr.io/3.7.3/plyr.js"></script>
+    <script>
+        // Retrieve the video URL from the query parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoUrl = urlParams.get('videoUrl');
+
+        if (videoUrl) {
+            // Initialize Plyr player with the video URL
+            const player = new Plyr('#player', {
+                url: videoUrl,
+            });
+
+            // Start playing the video
+            player.play();
+        }
+    </script>
     <script src="../js/script.js"></script>
 </body>
 </html>
