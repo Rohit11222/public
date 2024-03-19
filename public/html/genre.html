@@ -5,75 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Browse by Genre</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <!-- Include Plyr.js library -->
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.3/plyr.css">
 </head>
 <body>
     <header>
         <h1>Browse by Genre</h1>
     </header>
-
     <main>
-        <!-- Video Player section -->
         <section id="videoPlayerSection">
             <h2>Video Player</h2>
             <video id="player" controls></video>
         </section>
-
-        <!-- Genre dropdown container -->
         <div class="genre-dropdown-container">
             <select class="genre-dropdown" id="genreDropdown">
                 <option value="Pop">Pop</option>
                 <option value="Hip-hop">Hip-hop</option>
                 <option value="Cinematic">Cinematic</option>
                 <option value="Rock">Rock</option>
-                <!-- Add more genre options as needed -->
             </select>
-            <!-- Genre options dropdown -->
             <div class="genre-options" id="genreOptions">
                 <option value="Pop">Pop</option>
                 <option value="Hip-hop">Hip-hop</option>
                 <option value="Cinematic">Cinematic</option>
                 <option value="Rock">Rock</option>
-                <!-- Add more genre options as needed -->
             </div>
         </div>
-
-        <!-- Song list section -->
         <section id="songList">
             <h2>Songs</h2>
-            <!-- Songs will be dynamically populated here based on selected genre -->
         </section>
     </main>
-
     <footer>
         <p>&copy; 2024 Your Website. All rights reserved.</p>
     </footer>
 
-    <!-- Include Plyr.js library -->
-    <script src="https://cdn.plyr.io/3.7.3/plyr.js"></script>
-    <!-- Firebase JavaScript SDK -->
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js"></script>
-    <!-- Your Firebase configuration and initialization script -->
+
     <script>
         // Your Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
-  authDomain: "buzzrafters-a3e2b.firebaseapp.com",
-  databaseURL: "https://buzzrafters-a3e2b-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "buzzrafters-a3e2b",
-  storageBucket: "buzzrafters-a3e2b.appspot.com",
-  messagingSenderId: "970830986248",
-  appId: "1:970830986248:web:5d311e15c3031759a5e5bd",
-  measurementId: "G-4W0PT6G2D4"
-};
+        const firebaseConfig = {
+            apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
+            authDomain: "buzzrafters-a3e2b.firebaseapp.com",
+            databaseURL: "https://buzzrafters-a3e2b-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "buzzrafters-a3e2b",
+            storageBucket: "buzzrafters-a3e2b.appspot.com",
+            messagingSenderId: "970830986248",
+            appId: "1:970830986248:web:5d311e15c3031759a5e5bd",
+            measurementId: "G-4W0PT6G2D4"
+        };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
     </script>
-    <!-- Your main script -->
+
+    <script src="https://cdn.plyr.io/3.7.3/plyr.js"></script>
     <script src="../js/script.js"></script>
 </body>
 </html>
