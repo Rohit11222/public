@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Initialize Plyr player
     const player = new Plyr('#player');
 
     // Initialize Firebase Storage
@@ -56,16 +55,28 @@ document.addEventListener("DOMContentLoaded", function() {
         fetchSongsByGenre(selectedGenre);
     });
 
-    // Function to fetch songs by genre using AJAX
+    // Function to fetch songs by genre from Firebase Storage
     function fetchSongsByGenre(genre) {
-        fetch(`/api/songs?genre=${genre}`)
-            .then(response => response.json())
-            .then(songs => {
-                displaySongs(songs);
-            })
-            .catch(error => {
+        // Reference to the Firebase Storage bucket where your songs are stored
+        const storageRef = storage.ref();
+
+        // Path to the folder where songs of the selected genre are stored
+        const genreFolderRef = storageRef.child(`songs/${genre}`);
+
+        // Fetch the list of songs in the genre folder
+        genreFolderRef.listAll().then(function(res) {
+            // Extract the download URLs of the songs
+            const songs = res.items.map(item => item.getDownloadURL());
+            
+            // Once all download URLs are fetched, display the songs
+            Promise.all(songs).then(function(downloadURLs) {
+                displaySongs(downloadURLs);
+            }).catch(function(error) {
                 console.error('Error fetching songs:', error);
             });
+        }).catch(function(error) {
+            console.error('Error fetching songs:', error);
+        });
     }
 
     // Function to display the list of songs
@@ -73,14 +84,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const songList = document.getElementById('songList');
         songList.innerHTML = '';
 
-        songs.forEach(song => {
+        songs.forEach(songUrl => {
             const songItem = document.createElement('div');
-            songItem.textContent = song.name; // Display song name
+            songItem.textContent = songUrl; // Display song URL for now
             songList.appendChild(songItem);
 
             // Add functionality to play the song on click
             songItem.addEventListener('click', function() {
-                playSong(song.url);
+                playSong(songUrl);
             });
         });
     }
@@ -97,4 +108,3 @@ document.addEventListener("DOMContentLoaded", function() {
         };
     }
 });
-
