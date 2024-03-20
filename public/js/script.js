@@ -1,7 +1,6 @@
-// Create a script element for the Firebase SDK
-const firebaseScript = document.createElement('script');
-firebaseScript.src = 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js'; // Firebase App module
-document.head.appendChild(firebaseScript);
+// Import Firebase SDK
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/storage';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -15,106 +14,110 @@ const firebaseConfig = {
   measurementId: "G-4W0PT6G2D4"
 };
 
-// Wait for the Firebase SDK to load
-firebaseScript.addEventListener('load', () => {
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
-  // Your existing code starts here
-  document.addEventListener("DOMContentLoaded", function() {
-    const player = new Plyr('#player');
+document.addEventListener("DOMContentLoaded", function() {
+  const player = new Plyr('#player');
 
-    // Initialize Firebase Storage
-    const storage = firebase.storage();
+  // Initialize Firebase Storage
+  const storage = firebase.storage();
 
-    // Get references to DOM elements
-    const uploadForm = document.getElementById('uploadForm');
-    const videoFileInput = document.getElementById('videoFile');
-    const genreDropdown = document.getElementById('genreDropdown');
-    const songList = document.getElementById('songList');
+  // Get references to DOM elements
+  const uploadForm = document.getElementById('uploadForm');
+  const videoFileInput = document.getElementById('videoFile');
+  const genreDropdown = document.getElementById('genreDropdown');
+  const songList = document.getElementById('songList');
 
-    // Function to handle file upload
-    uploadForm.addEventListener('submit', function(event) {
-      event.preventDefault();
+  // Function to handle file upload
+  uploadForm.addEventListener('submit', function(event) {
+    event.preventDefault();
 
-      const file = videoFileInput.files[0];
-      if (!file) {
-        console.error('No file selected');
-        return;
-      }
+    const file = videoFileInput.files[0];
+    if (!file) {
+      console.error('No file selected');
+      return;
+    }
 
-      // Create a storage reference
-      const storageRef = storage.ref(`videos/${file.name}`);
+    // Create a storage reference
+    const storageRef = storage.ref(`videos/${file.name}`);
 
-      // Upload the file to Firebase Storage
-      const uploadTask = storageRef.put(file);
+    // Upload the file to Firebase Storage
+    const uploadTask = storageRef.put(file);
 
-      // Monitor upload progress
-      uploadTask.on('state_changed',
-        function(snapshot) {
-          // Handle progress
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload progress:', progress);
-        },
-        function(error) {
-          // Handle errors
-          console.error('Error uploading file:', error);
-        },
-        function() {
-          // Handle successful upload
-          console.log('File uploaded successfully');
+    // Monitor upload progress
+    uploadTask.on('state_changed',
+      function(snapshot) {
+        // Handle progress
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload progress:', progress);
+      },
+      function(error) {
+        // Handle errors
+        console.error('Error uploading file:', error);
+      },
+      function() {
+        // Handle successful upload
+        console.log('File uploaded successfully');
 
-          // Get the download URL for the uploaded file
-          uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-            // Redirect to the genre.html page with the download URL as a query parameter
-            window.location.href = `genre.html?videoUrl=${encodeURIComponent(downloadURL)}`;
-          });
-        }
-      );
-    });
-
-    // Function to handle genre selection
-    genreDropdown.addEventListener('change', function() {
-      const selectedGenre = genreDropdown.value;
-      fetchSongsByGenre(selectedGenre);
-    });
-
-    // Function to fetch songs by genre from Firebase Storage
-    function fetchSongsByGenre(genre) {
-      // Reference to the Firebase Storage bucket where your songs are stored
-      const storageRef = storage.ref();
-
-      // Path to the folder where songs of the selected genre are stored
-      const genreFolderRef = storageRef.child(`songs/${genre}`);
-
-      // Fetch the list of songs in the genre folder
-      genreFolderRef.listAll().then(function(res) {
-        // Extract the download URLs of the songs
-        const songs = res.items.map(item => item.getDownloadURL());
-
-        // Once all download URLs are fetched, display the songs
-        Promise.all(songs).then(function(downloadURLs) {
-          displaySongs(downloadURLs);
-        }).catch(function(error) {
-          console.error('Error fetching songs:', error);
+        // Get the download URL for the uploaded file
+        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+          // Redirect to the genre.html page with the download URL as a query parameter
+          window.location.href = `genre.html?videoUrl=${encodeURIComponent(downloadURL)}`;
         });
+      }
+    );
+  });
+
+  // Function to handle genre selection
+  genreDropdown.addEventListener('change', function() {
+    const selectedGenre = genreDropdown.value;
+    fetchSongsByGenre(selectedGenre);
+  });
+
+  // Function to fetch songs by genre from Firebase Storage
+  function fetchSongsByGenre(genre) {
+    // Reference to the Firebase Storage bucket where your songs are stored
+    const storageRef = storage.ref();
+
+    // Path to the folder where songs of the selected genre are stored
+    const genreFolderRef = storageRef.child(`songs/${genre}`);
+
+    // Fetch the list of songs in the genre folder
+    genreFolderRef.listAll().then(function(res) {
+      // Extract the download URLs of the songs
+      const songs = res.items.map(item => item.getDownloadURL());
+
+      // Once all download URLs are fetched, display the songs
+      Promise.all(songs).then(function(downloadURLs) {
+        displaySongs(downloadURLs);
       }).catch(function(error) {
         console.error('Error fetching songs:', error);
       });
-    }
+    }).catch(function(error) {
+      console.error('Error fetching songs:', error);
+    });
+  }
 
-    // Function to display the list of songs
-    function displaySongs(songs) {
-      songList.innerHTML = '';
+  // Function to display the list of songs
+  function displaySongs(songs) {
+    songList.innerHTML = '';
 
-      songs.forEach(songUrl => {
-        const songItem = document.createElement('div');
-        const audio = document.createElement('audio');
-        audio.controls = true;
-        audio.src = songUrl;
-        songItem.appendChild(audio);
-        songList.appendChild(songItem);
-      });
-    }
-  });
+    songs.forEach(songUrl => {
+      const songItem = document.createElement('div');
+      const audio = document.createElement('audio');
+      audio.controls = true;
+      audio.src = songUrl;
+      songItem.appendChild(audio);
+      songList.appendChild(songItem);
+    });
+  }
+
+  // Get the video URL from the query parameter and set it as the source for the video player
+  const urlParams = new URLSearchParams(window.location.search);
+  const videoUrl = urlParams.get('videoUrl');
+  if (videoUrl) {
+    const videoPlayer = document.getElementById('player');
+    videoPlayer.src = decodeURIComponent(videoUrl);
+  }
 });
