@@ -1,6 +1,6 @@
 // Create a script element for the Firebase SDK
 const firebaseScript = document.createElement('script');
-firebaseScript.src = 'https://firebase.google.com/firebase/9.6.0/firebase.js'; // Updated URL
+firebaseScript.src = 'https://cdn.jsdelivr.net/npm/firebase@9.6.0/firebase.js'; // Updated URL with jsDelivr CDN
 document.head.appendChild(firebaseScript);
 
 // Your web app's Firebase configuration
