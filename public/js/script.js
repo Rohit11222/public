@@ -1,10 +1,10 @@
 // Import Firebase SDK
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/storage';
+import { initializeApp } from 'firebase/app';
+import { getStorage } from 'firebase/storage';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
+  apiKey: "YOUR_API_KEY",
   authDomain: "buzzrafters-a3e2b.firebaseapp.com",
   databaseURL: "https://buzzrafters-a3e2b-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "buzzrafters-a3e2b",
@@ -15,13 +15,13 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
 
 document.addEventListener("DOMContentLoaded", function() {
   const player = new Plyr('#player');
 
   // Initialize Firebase Storage
-  const storage = firebase.storage();
+  const storage = getStorage(firebaseApp);
 
   // Get references to DOM elements
   const uploadForm = document.getElementById('uploadForm');
@@ -40,10 +40,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Create a storage reference
-    const storageRef = storage.ref(`videos/${file.name}`);
+    const storageRef = ref(storage, `videos/${file.name}`);
 
     // Upload the file to Firebase Storage
-    const uploadTask = storageRef.put(file);
+    const uploadTask = uploadBytes(storageRef, file);
 
     // Monitor upload progress
     uploadTask.on('state_changed',
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log('File uploaded successfully');
 
         // Get the download URL for the uploaded file
-        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+        getDownloadURL(uploadTask.snapshot.ref).then(function(downloadURL) {
           // Redirect to the genre.html page with the download URL as a query parameter
           window.location.href = `genre.html?videoUrl=${encodeURIComponent(downloadURL)}`;
         });
@@ -78,15 +78,15 @@ document.addEventListener("DOMContentLoaded", function() {
   // Function to fetch songs by genre from Firebase Storage
   function fetchSongsByGenre(genre) {
     // Reference to the Firebase Storage bucket where your songs are stored
-    const storageRef = storage.ref();
+    const storageRef = ref(storage);
 
     // Path to the folder where songs of the selected genre are stored
-    const genreFolderRef = storageRef.child(`songs/${genre}`);
+    const genreFolderRef = child(storageRef, `songs/${genre}`);
 
     // Fetch the list of songs in the genre folder
-    genreFolderRef.listAll().then(function(res) {
+    listAll(genreFolderRef).then(function(res) {
       // Extract the download URLs of the songs
-      const songs = res.items.map(item => item.getDownloadURL());
+      const songs = res.items.map(item => getDownloadURL(item));
 
       // Once all download URLs are fetched, display the songs
       Promise.all(songs).then(function(downloadURLs) {
