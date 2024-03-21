@@ -1,7 +1,7 @@
 // Import Firebase SDK
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js';
-import { getStorage, ref, uploadBytes, getDownloadURL, listAll } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
-import { getDatabase, ref as databaseRef } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
+import { getStorage, ref, listAll, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
+import { getDatabase } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -81,28 +81,32 @@ window.onload = function() {
   // Function to fetch songs by genre from Firebase Storage
   function fetchSongsByGenre(genre) {
     // Reference to the Firebase Storage bucket where your songs are stored
-    const storageRef = ref(storage);
+    const storageRef = ref(storage, 'songs');
 
-    // Reference to the Firebase Realtime Database
+    // Reference to the Firebase Realtime Database (not needed for this functionality)
     const database = getDatabase(firebaseApp);
 
     // Path to the folder where songs of the selected genre are stored
-    const genreFolderRef = ref(database, `songs/${genre}`);
+    const genreFolderRef = ref(storage, `songs/${genre}`);
 
     // Fetch the list of songs in the genre folder
-    listAll(genreFolderRef).then(function(res) {
-      // Extract the download URLs of the songs
-      const songs = res.items.map(item => getDownloadURL(item));
+    listAll(genreFolderRef)
+      .then(function(res) {
+        // Extract the download URLs of the songs
+        const songs = res.items.map(item => getDownloadURL(item));
 
-      // Once all download URLs are fetched, display the songs
-      Promise.all(songs).then(function(downloadURLs) {
-        displaySongs(downloadURLs);
-      }).catch(function(error) {
+        // Once all download URLs are fetched, display the songs
+        Promise.all(songs)
+          .then(function(downloadURLs) {
+            displaySongs(downloadURLs);
+          })
+          .catch(function(error) {
+            console.error('Error fetching songs:', error);
+          });
+      })
+      .catch(function(error) {
         console.error('Error fetching songs:', error);
       });
-    }).catch(function(error) {
-      console.error('Error fetching songs:', error);
-    });
   }
 
   // Function to display the list of songs
