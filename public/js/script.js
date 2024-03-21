@@ -1,6 +1,6 @@
 // Import Firebase SDK
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js';
-import { getStorage, ref, uploadBytes, getDownloadURL, listAll, child } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
+import { getStorage, ref, uploadBytes, getDownloadURL, listAll } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
