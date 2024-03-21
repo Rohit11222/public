@@ -1,23 +1,17 @@
 // Import Firebase SDK
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js';
 import { getStorage, ref, uploadBytes, getDownloadURL, listAll } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
+import { getDatabase, ref as databaseRef } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
-  authDomain: "buzzrafters-a3e2b.firebaseapp.com",
-  databaseURL: "https://buzzrafters-a3e2b-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "buzzrafters-a3e2b",
-  storageBucket: "buzzrafters-a3e2b.appspot.com",
-  messagingSenderId: "970830986248",
-  appId: "1:970830986248:web:5d311e15c3031759a5e5bd",
-  measurementId: "G-4W0PT6G2D4"
+  // ... (configuration omitted for brevity)
 };
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
-document.addEventListener("DOMContentLoaded", function() {
+window.onload = function() {
   const player = new Plyr('#player');
 
   // Initialize Firebase Storage
@@ -30,44 +24,46 @@ document.addEventListener("DOMContentLoaded", function() {
   const songList = document.getElementById('songList');
 
   // Function to handle file upload
-  uploadForm.addEventListener('submit', function(event) {
-    event.preventDefault();
+  if (uploadForm && videoFileInput) {
+    uploadForm.addEventListener('submit', function(event) {
+      event.preventDefault();
 
-    const file = videoFileInput.files[0];
-    if (!file) {
-      console.error('No file selected');
-      return;
-    }
-
-    // Create a storage reference
-    const storageRef = ref(storage, `videos/${file.name}`);
-
-    // Upload the file to Firebase Storage
-    const uploadTask = uploadBytes(storageRef, file);
-
-    // Monitor upload progress
-    uploadTask.on('state_changed',
-      function(snapshot) {
-        // Handle progress
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload progress:', progress);
-      },
-      function(error) {
-        // Handle errors
-        console.error('Error uploading file:', error);
-      },
-      function() {
-        // Handle successful upload
-        console.log('File uploaded successfully');
-
-        // Get the download URL for the uploaded file
-        getDownloadURL(uploadTask.snapshot.ref).then(function(downloadURL) {
-          // Redirect to the genre.html page with the download URL as a query parameter
-          window.location.href = `genre.html?videoUrl=${encodeURIComponent(downloadURL)}`;
-        });
+      const file = videoFileInput.files[0];
+      if (!file) {
+        console.error('No file selected');
+        return;
       }
-    );
-  });
+
+      // Create a storage reference
+      const storageRef = ref(storage, `videos/${file.name}`);
+
+      // Upload the file to Firebase Storage
+      const uploadTask = uploadBytes(storageRef, file);
+
+      // Monitor upload progress
+      uploadTask.on('state_changed',
+        function(snapshot) {
+          // Handle progress
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload progress:', progress);
+        },
+        function(error) {
+          // Handle errors
+          console.error('Error uploading file:', error);
+        },
+        function() {
+          // Handle successful upload
+          console.log('File uploaded successfully');
+
+          // Get the download URL for the uploaded file
+          getDownloadURL(uploadTask.snapshot.ref).then(function(downloadURL) {
+            // Redirect to the genre.html page with the download URL as a query parameter
+            window.location.href = `genre.html?videoUrl=${encodeURIComponent(downloadURL)}`;
+          });
+        }
+      );
+    });
+  }
 
   // Function to handle genre selection
   genreDropdown.addEventListener('change', function() {
@@ -80,8 +76,11 @@ document.addEventListener("DOMContentLoaded", function() {
     // Reference to the Firebase Storage bucket where your songs are stored
     const storageRef = ref(storage);
 
+    // Reference to the Firebase Realtime Database
+    const database = getDatabase(firebaseApp);
+
     // Path to the folder where songs of the selected genre are stored
-    const genreFolderRef = child(storageRef, `songs/${genre}`);
+    const genreFolderRef = ref(database, `songs/${genre}`);
 
     // Fetch the list of songs in the genre folder
     listAll(genreFolderRef).then(function(res) {
@@ -120,4 +119,4 @@ document.addEventListener("DOMContentLoaded", function() {
     const videoPlayer = document.getElementById('player');
     videoPlayer.src = decodeURIComponent(videoUrl);
   }
-});
+};
