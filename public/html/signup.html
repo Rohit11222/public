@@ -1,36 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up</title>
-    <link rel="stylesheet" href="../css/styles.css">
-</head>
-<body>
-    <!-- Your custom script -->
-    <script src="../js/signup.js"></script>
-
+    <link rel="stylesheet" href="../css/styles.css" />
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://cdn.firebase.com/libs/firebaseui/4.8.0/firebaseui.css"
+    />
+    <script src="https://cdn.firebase.com/libs/firebaseui/4.8.0/firebaseui.js"></script>
+  </head>
+  <body>
     <header>
-        <h1>Sign Up</h1>
+      <h1>Sign Up</h1>
     </header>
-
     <main>
-        <section>
-            <h2>Create an Account</h2>
-            <form id="signUpForm">
-                <label for="email">Email:</label>
-                <input type="email" name="email" id="email" required>
-
-                <label for="password">Password:</label>
-                <input type="password" name="password" id="password" required>
-
-                <button type="submit">Sign Up</button>
-            </form>
-        </section>
+      <section>
+        <h2>Create an Account</h2>
+        <div id="sign-up-element"></div>
+      </section>
     </main>
-
     <footer>
-        <p>&copy; 2024 Your Website. All rights reserved.</p>
+      <p>&copy; 2024 Your Website. All rights reserved.</p>
     </footer>
-</body>
+    <script src="../js/signup.js"></script>
+  </body>
 </html>
