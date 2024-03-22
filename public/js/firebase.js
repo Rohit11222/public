@@ -1,8 +1,4 @@
-// Import the Firebase SDK (without ES6 module syntax)
-const firebase = require('firebase/compat/app');
-require('firebase/compat/auth');
-
-// Your web app's Firebase configuration
+// Initialize Firebase
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
@@ -13,11 +9,6 @@ const firebaseConfig = {
     messagingSenderId: "970830986248",
     appId: "1:970830986248:web:5d311e15c3031759a5e5bd",
     measurementId: "G-4W0PT6G2D4"
-  };;
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
-// Export the Firebase app instance and auth instance
-export const firebaseApp = firebase.app();
-export const firebaseAuth = firebase.auth();
+  };
+  firebase.initializeApp(firebaseConfig);
+  
