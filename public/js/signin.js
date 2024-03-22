@@ -1,6 +1,7 @@
 // Import the Firebase app instance and auth instance
-import { getAuth } from 'firebase/auth';
+import { getAuth } from '/node_modules/firebase/auth/index.js';
 import firebase from './firebase.js';
+
 
 // Initialize FirebaseUI
 const ui = new firebaseui.auth.AuthUI(getAuth(firebase));
