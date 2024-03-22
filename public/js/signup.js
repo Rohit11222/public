@@ -1,5 +1,5 @@
 // Import the Firebase app instance and auth instance
-import { getAuth } from 'firebase/compat/auth';
+import { getAuth } from 'firebase/auth';
 import firebase from './firebase.js';
 
 // Initialize FirebaseUI
