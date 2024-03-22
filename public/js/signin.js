@@ -1,5 +1,8 @@
-// Import the Firebase app instance and auth instance
-import { firebaseApp, firebaseAuth } from '../js/firebase.js';
+// Import Firebase app instance and auth instance
+import { firebaseApp, firebaseAuth } from './firebase.js';
+
+// Import FirebaseUI
+const firebaseui = require('firebaseui');
 
 // Initialize FirebaseUI
 const ui = new firebaseui.auth.AuthUI(firebaseAuth);
@@ -7,17 +10,18 @@ const ui = new firebaseui.auth.AuthUI(firebaseAuth);
 // FirebaseUI configuration
 const uiConfig = {
   signInOptions: [
-    firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    firebaseAuth.EmailAuthProvider.PROVIDER_ID,
     // Other providers...
   ],
   // Other config options...
 };
 
-// Get the sign-in element
+// Get the sign-in or sign-up element
 const signInElement = document.getElementById('sign-in-element');
+const signUpElement = document.getElementById('sign-up-element');
 
 // Start FirebaseUI
-ui.start(signInElement, uiConfig);
+ui.start(signInElement || signUpElement, uiConfig);
 
 // Listen for auth state changes
 firebaseAuth.onAuthStateChanged((user) => {
