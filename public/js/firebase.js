@@ -1,4 +1,8 @@
-// Initialize Firebase
+// Import the Firebase SDK
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+
+// Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
@@ -10,5 +14,10 @@ const firebaseConfig = {
     appId: "1:970830986248:web:5d311e15c3031759a5e5bd",
     measurementId: "G-4W0PT6G2D4"
   };
+
+// Initialize Firebase
+if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-  
+}
+
+export default firebase;
