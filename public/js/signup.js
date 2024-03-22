@@ -1,5 +1,4 @@
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
   authDomain: "buzzrafters-a3e2b.firebaseapp.com",
@@ -14,31 +13,41 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+// Initialize FirebaseUI
+const ui = new firebaseui.auth.AuthUI(firebase.auth());
+
 // FirebaseUI configuration
 const uiConfig = {
   signInOptions: [
-    firebase.auth.EmailAuthProvider.PROVIDER_ID, // Email/Password
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID // Google
+    firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    // Other providers...
   ],
-  signInSuccessUrl: '/upload.html', // Redirect URL after sign-up
-  signInFlow: 'popup', // Display sign-up flow as a popup
+  signInSuccessUrl: 'upload.html',
+  signInFlow: 'popup',
   callbacks: {
     signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-      // Handle successful sign-up
-      // Redirect to the specified URL
-      window.location.assign(redirectUrl);
+      // Handle successful sign-in
+      if (authResult.additionalUserInfo.isNewUser) {
+        // New user signed up
+        console.log('New user signed up:', authResult.user);
+      } else {
+        // Existing user signed in
+        console.log('Existing user signed in:', authResult.user);
+      }
+      // Optionally, you can redirect the user to a different page
+      // window.location.assign(redirectUrl);
       return false; // Prevent automatic redirect
     }
   }
 };
 
-// Initialize the FirebaseUI instance
-const ui = new firebaseui.auth.AuthUI(firebase.auth());
+// Get the sign-up element
+const signUpElement = document.getElementById('sign-up-element');
 
-// Start the FirebaseUI authentication UI
-ui.start('#sign-up-element', uiConfig);
+// Start FirebaseUI
+ui.start(signUpElement, uiConfig);
 
-// Listen to authentication state changes
+// Listen for auth state changes
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     // User is signed in

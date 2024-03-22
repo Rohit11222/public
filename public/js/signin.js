@@ -13,31 +13,25 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+// Initialize FirebaseUI
+const ui = new firebaseui.auth.AuthUI(firebase.auth());
+
 // FirebaseUI configuration
 const uiConfig = {
   signInOptions: [
-    firebase.auth.EmailAuthProvider.PROVIDER_ID, // Email/Password
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID // Google
+    firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    // Other providers...
   ],
-  signInSuccessUrl: '/upload.html', // Redirect URL after sign-up
-  signInFlow: 'popup', // Display sign-up flow as a popup
-  callbacks: {
-    signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-      // Handle successful sign-up
-      // Redirect to the specified URL
-      window.location.assign(redirectUrl);
-      return false; // Prevent automatic redirect
-    }
-  }
+  // Other config options...
 };
 
-// Initialize the FirebaseUI instance
-const ui = new firebaseui.auth.AuthUI(firebase.auth());
+// Get the sign-in element
+const signInElement = document.getElementById('sign-in-element');
 
-// Start the FirebaseUI authentication UI
-ui.start('#sign-up-element', uiConfig);
+// Start FirebaseUI
+ui.start(signInElement, uiConfig);
 
-// Listen to authentication state changes
+// Listen for auth state changes
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     // User is signed in

@@ -1,37 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="../css/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="../css/styles.css" />
 </head>
 <body>
-    <!-- Include FirebaseUI Auth CSS -->
-    <link type="text/css" rel="stylesheet" href="/node_modules/firebaseui/dist/firebaseui.css" />
+  <header>
+    <h1>Sign Up</h1>
+  </header>
+  <main>
+    <section>
+      <h2>Create an Account</h2>
+      <div id="sign-up-element"></div>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 Your Website. All rights reserved.</p>
+  </footer>
 
-    <header>
-        <h1>Sign Up</h1>
-    </header>
+  <!-- Firebase App (the core Firebase SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
 
-    <main>
-        <section>
-            <h2>Create an Account</h2>
-            <!-- Container for FirebaseUI Auth UI -->
-            <div id="sign-up-element"></div>
-        </section>
-    </main>
+  <!-- Firebase Authentication -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth.js"></script>
 
-    <footer>
-        <p>&copy; 2024 Your Website. All rights reserved.</p>
-    </footer>
+  <!-- FirebaseUI -->
+  <script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
 
-    <!-- Include Firebase and FirebaseUI Auth SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth.js"></script>
-    <script src="/node_modules/firebaseui/dist/firebaseui.js"></script>
-    
-    <!-- Your custom script -->
-    <script src="../js/signup.js"></script>
+  <!-- Your JavaScript file -->
+  <script src="../js/signup.js"></script>
 </body>
 </html>
