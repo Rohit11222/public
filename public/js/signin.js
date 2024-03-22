@@ -1,9 +1,4 @@
-// Import Firebase SDK
-import * as firebaseui from '/node_modules/firebaseui/dist/firebaseui.js';
-import '/node_modules/firebaseui/dist/firebaseui.css';
-
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
   authDomain: "buzzrafters-a3e2b.firebaseapp.com",
@@ -24,11 +19,11 @@ const uiConfig = {
     firebase.auth.EmailAuthProvider.PROVIDER_ID, // Email/Password
     firebase.auth.GoogleAuthProvider.PROVIDER_ID // Google
   ],
-  signInSuccessUrl: '/upload.html', // Redirect URL after sign-in
-  signInFlow: 'popup', // Display sign-in flow as a popup
+  signInSuccessUrl: '/upload.html', // Redirect URL after sign-up
+  signInFlow: 'popup', // Display sign-up flow as a popup
   callbacks: {
     signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-      // Handle successful sign-in
+      // Handle successful sign-up
       // Redirect to the specified URL
       window.location.assign(redirectUrl);
       return false; // Prevent automatic redirect
@@ -40,7 +35,7 @@ const uiConfig = {
 const ui = new firebaseui.auth.AuthUI(firebase.auth());
 
 // Start the FirebaseUI authentication UI
-ui.start('#sign-in-element', uiConfig);
+ui.start('#sign-up-element', uiConfig);
 
 // Listen to authentication state changes
 firebase.auth().onAuthStateChanged((user) => {
