@@ -5,12 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up</title>
   <link rel="stylesheet" href="../css/styles.css">
-  <!-- Include Firebase SDK scripts -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-  <!-- Include FirebaseUI -->
-  <script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth-compat.js"></script>
-  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css">
 </head>
 <body>
   <header>
@@ -19,13 +13,19 @@
   <main>
     <section>
       <h2>Create an Account</h2>
-      <div id="sign-up-element"></div>
+      <button id="sign-up-btn">Sign Up</button>
     </section>
   </main>
   <footer>
     <p>&copy; 2024 Your Website. All rights reserved.</p>
   </footer>
-  <!-- Your JavaScript file -->
-  <script src="../js/signup.js" type="module"></script>
+  <script>
+    const signUpBtn = document.getElementById('sign-up-btn');
+
+    signUpBtn.addEventListener('click', () => {
+      // Redirect the user to the Auth0 Universal Login Page for sign-up
+      window.location.href = '/login?signup=true';
+    });
+  </script>
 </body>
 </html>
