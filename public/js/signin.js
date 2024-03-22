@@ -1,4 +1,5 @@
 // Access Firebase Auth functionality using the global firebase object
+import firebase from "./firebase.js";
 const firebaseAuth = firebase.auth();
 
 // Initialize FirebaseUI
