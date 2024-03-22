@@ -1,9 +1,9 @@
-// Access Firebase Auth functionality using the global firebase object
-import firebase from "./firebase.js";
-const firebaseAuth = firebase.auth();
+// Import the Firebase app instance and auth instance
+import { getAuth } from 'firebase/compat/auth';
+import firebase from './firebase.js';
 
 // Initialize FirebaseUI
-const ui = new firebaseui.auth.AuthUI(firebaseAuth);
+const ui = new firebaseui.auth.AuthUI(getAuth(firebase));
 
 // FirebaseUI configuration
 const uiConfig = {
@@ -21,7 +21,7 @@ const signInElement = document.getElementById('sign-in-element');
 ui.start(signInElement, uiConfig);
 
 // Listen for auth state changes
-firebaseAuth.onAuthStateChanged((user) => {
+getAuth(firebase).onAuthStateChanged((user) => {
   if (user) {
     // User is signed in
     console.log('User signed in:', user);
