@@ -1,5 +1,9 @@
+// Import the required Firebase modules
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+
 // Your web app's Firebase configuration
-var firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
   authDomain: "buzzrafters-a3e2b.firebaseapp.com",
   databaseURL: "https://buzzrafters-a3e2b-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -14,15 +18,15 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // Initialize FirebaseUI
-var ui = new firebaseui.auth.AuthUI(firebase.auth());
+const ui = new firebaseui.auth.AuthUI(firebase.auth());
 
 // FirebaseUI configuration
-var uiConfig = {
+const uiConfig = {
   signInOptions: [
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
     // Other providers...
   ],
-  signInSuccessUrl: 'upload.html',
+  signInSuccessUrl: '/path/to/your/success/page.html',
   signInFlow: 'popup',
   callbacks: {
     signInSuccessWithAuthResult: function(authResult, redirectUrl) {
@@ -42,13 +46,13 @@ var uiConfig = {
 };
 
 // Get the sign-up element
-var signUpElement = document.getElementById('sign-up-element');
+const signUpElement = document.getElementById('sign-up-element');
 
 // Start FirebaseUI
 ui.start(signUpElement, uiConfig);
 
 // Listen for auth state changes
-firebase.auth().onAuthStateChanged(function(user) {
+firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     // User is signed in
     console.log('User signed in:', user);
