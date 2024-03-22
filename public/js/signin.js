@@ -1,5 +1,5 @@
 // Your web app's Firebase configuration
-const firebaseConfig = {
+var firebaseConfig = {
   apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
   authDomain: "buzzrafters-a3e2b.firebaseapp.com",
   databaseURL: "https://buzzrafters-a3e2b-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -14,10 +14,10 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // Initialize FirebaseUI
-const ui = new firebaseui.auth.AuthUI(firebase.auth());
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
 // FirebaseUI configuration
-const uiConfig = {
+var uiConfig = {
   signInOptions: [
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
     // Other providers...
@@ -26,13 +26,13 @@ const uiConfig = {
 };
 
 // Get the sign-in element
-const signInElement = document.getElementById('sign-in-element');
+var signInElement = document.getElementById('sign-in-element');
 
 // Start FirebaseUI
 ui.start(signInElement, uiConfig);
 
 // Listen for auth state changes
-firebase.auth().onAuthStateChanged((user) => {
+firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     // User is signed in
     console.log('User signed in:', user);
