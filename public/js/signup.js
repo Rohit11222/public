@@ -1,8 +1,7 @@
-// Import the required Firebase modules
-import firebase from 'https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js';
-import 'https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js';
-import * as firebaseui from 'https://cdn.firebase.com/libs/firebaseui/4.8.0/firebaseui.js';
-import 'https://cdn.firebase.com/libs/firebaseui/4.8.0/firebaseui.css';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import * as firebaseui from 'firebaseui';
+import 'firebaseui/dist/firebaseui.css';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
