@@ -22,7 +22,7 @@ var uiConfig = {
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
     // Other providers...
   ],
-  signInSuccessUrl: '/path/to/your/success/page.html',
+  signInSuccessUrl: 'upload.html',
   signInFlow: 'popup',
   callbacks: {
     signInSuccessWithAuthResult: function(authResult, redirectUrl) {
