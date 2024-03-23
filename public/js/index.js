@@ -1,39 +1,29 @@
 const express = require('express');
 const { auth } = require('express-openid-connect');
-const path = require('path');
+require('dotenv').config(); // Load environment variables from .env file
 
 const app = express();
 
-// Config for express-openid-connect middleware
+// Configuration for express-openid-connect middleware
 const config = {
   authRequired: false,
   auth0Logout: true,
-  secret: 'DQIhG4hQ0qwCXZGIhl1kQhtRB8Z42tJCEyuu4wp0wrdCXncb2CrfiIMfOmR4OIyn',
+  secret: process.env.AUTH0_SECRET,
   baseURL: 'https://www.buzzrafters.com',
-  clientID: 'j3MKg4otkGpOZpzQyHg9ThYsxy72QVIx',
-  issuerBaseURL: 'https://dev-ddeie1zcfk1vp015.us.auth0.com'
+  clientID: process.env.AUTH0_CLIENT_ID,
+  issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL
 };
 
-// Middleware for serving static files
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Auth router attaches /login, /logout, and /callback routes to the baseURL
+// Adding authentication middleware to Express app
 app.use(auth(config));
 
-// Route for signin.html
-app.get('/signin', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'signin.html'));
-});
-
-// Route for signup.html
-app.get('/signup', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'signup.html'));
-});
-
-// Route for checking authentication status
+// Define your application routes
 app.get('/', (req, res) => {
   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+// Start the Express server
+const PORT = process.env.PORT || 443;
+app.listen(PORT, () => {
+  console.log(`Server is running on https://www.buzzrafters.com:${PORT}`);
+});
