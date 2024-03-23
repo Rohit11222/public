@@ -11,7 +11,7 @@ const config = {
   auth0Logout: true,
   secret: process.env.SECRET, // Fetch secret from environment variables
   baseURL: 'https://dev-ddeie1zcfk1vp015.us.auth0.com',
-  clientID: 'j3MKg4otkGpOZpzQyHg9ThYsxy72QVIx', // Replace with your Auth0 client ID
+  clientID: 'YOUR_CLIENT_ID', // Replace with your Auth0 client ID
   issuerBaseURL: 'https://dev-ddeie1zcfk1vp015.us.auth0.com'
 };
 
@@ -20,15 +20,15 @@ app.use(auth(config));
 
 // Serve HTML pages
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'html', 'index.html'));
 });
 
 app.get('/signup', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'signup.html'));
+  res.sendFile(path.join(__dirname, 'public', 'html', 'signup.html'));
 });
 
 app.get('/signin', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'signin.html'));
+  res.sendFile(path.join(__dirname, 'public', 'html', 'signin.html'));
 });
 
 // Route to initiate authentication flow with Auth0
