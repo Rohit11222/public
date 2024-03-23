@@ -9,15 +9,20 @@ const config = {
   authRequired: false,
   auth0Logout: true,
   secret: 'a long, randomly-generated string stored in env',
-  baseURL: 'https://www.buzzrafters.com',
+  baseURL: 'https://buzzrafters.com',
   clientID: 'j3MKg4otkGpOZpzQyHg9ThYsxy72QVIx',
-  issuerBaseURL: 'https://dev-ddeie1zcfk1vp015.us.auth0.com'
+  issuerBaseURL: 'https://dev-ddeie1zcfk1vp015.us.auth0.com',
+  authorizationParams: {
+    response_type: 'code',
+    scope: 'openid profile email',
+    signup: true // <- Add this line
+  }
 };
 
 // Middleware for serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// auth router attaches /login, /logout, and /callback routes to the baseURL
+// Auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
 // Route for signin.html
