@@ -1,37 +1,28 @@
+require('dotenv').config();
 const express = require('express');
 const { auth } = require('express-openid-connect');
-const serverless = require('serverless-http');
-const path = require('path');
 
 const app = express();
+const port = process.env.PORT || 3000;
 
-// Config for express-openid-connect middleware
 const config = {
   authRequired: false,
   auth0Logout: true,
-  secret: process.env.SECRET,
-  baseURL: 'https://www.buzzrafters.com/callback', // Your custom domain
-  clientID: 'j3MKg4otkGpOZpzQyHg9ThYsxy72QVIx',
-  issuerBaseURL: 'https://dev-ddeie1zcfk1vp015.us.auth0.com'
+  secret: process.env.AUTH0_SECRET, // Store your secret in environment variables
+  baseURL: process.env.BASE_URL || `http://localhost:${port}/callback`, // Adjust base URL
+  clientID: process.env.AUTH0_CLIENT_ID, // Your Auth0 client ID
+  issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL // Your Auth0 issuer base URL
 };
 
-// Auth router attaches /login, /logout, and /callback routes to the baseURL
+// Attach authentication routes (/login, /logout, /callback) to the baseURL
 app.use(auth(config));
 
-// Route for handling the authentication callback
-app.get('/callback', (req, res) => {
-  // Handle the authentication callback
-  // Redirect the user to the upload.html page after successful authentication
-  res.redirect('/upload.html');
+// Define routes
+app.get('/', (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
-// Serve the static files (HTML, CSS, JS) from the 'public' folder
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Catch-all route for client-side routing
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// Start the server
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
-
-// Export the Express app as a Lambda function
-exports.handler = serverless(app);
