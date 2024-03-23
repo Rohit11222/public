@@ -10,7 +10,7 @@ const config = {
   authRequired: false,
   auth0Logout: true,
   secret: process.env.SECRET,
-  baseURL: 'https://www.buzzrafters.com', // Your custom domain
+  baseURL: 'https://www.buzzrafters.com/callback', // Your custom domain
   clientID: 'j3MKg4otkGpOZpzQyHg9ThYsxy72QVIx',
   issuerBaseURL: 'https://dev-ddeie1zcfk1vp015.us.auth0.com'
 };
