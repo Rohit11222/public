@@ -1,6 +1,7 @@
 const express = require('express');
 const { auth } = require('express-openid-connect');
 require('dotenv').config(); // Load environment variables from .env file
+const path = require('path'); // Import path module to handle file paths
 
 const app = express();
 
@@ -23,12 +24,12 @@ app.use(express.static('public'));
 // Define your application routes
 // Route to serve the signup page
 app.get('/signup', (req, res) => {
-  res.sendFile(__dirname + '/public/signup.html');
+  res.sendFile(path.join(__dirname, '/public/html/signup.html'));
 });
 
 // Route to serve the signin page
 app.get('/signin', (req, res) => {
-  res.sendFile(__dirname + '/public/signin.html');
+  res.sendFile(path.join(__dirname, '/public/html/signin.html'));
 });
 
 // Route to handle form submission for signup
