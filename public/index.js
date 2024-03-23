@@ -1,17 +1,17 @@
 // Import necessary modules
 const express = require('express');
-const app = express();
-const path = require('path'); // Import the path module
-
-// Import necessary middleware and configuration
+const path = require('path'); // For working with file paths
 const { auth } = require('express-openid-connect');
-require('dotenv').config();
+require('dotenv').config(); // For loading environment variables
+
+// Create Express application
+const app = express();
 
 // Configuration for Auth0
 const config = {
   authRequired: false,
   auth0Logout: true,
-  secret: process.env.SECRET,
+  secret: process.env.SECRET, // Fetch secret from environment variables
   baseURL: 'https://dev-ddeie1zcfk1vp015.us.auth0.com',
   clientID: 'j3MKg4otkGpOZpzQyHg9ThYsxy72QVIx',
   issuerBaseURL: 'https://dev-ddeie1zcfk1vp015.us.auth0.com'
@@ -38,7 +38,7 @@ app.get('/signin', (req, res) => {
 });
 
 // Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// No need to specify port, Netlify will manage this
+app.listen(() => {
+  console.log(`Server is running`);
 });
