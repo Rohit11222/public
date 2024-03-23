@@ -27,14 +27,14 @@ app.get('/', (req, res) => {
 
 // Route for sign-up page
 app.get('/signup', (req, res) => {
-  // Serve the signup.html page from the html directory
-  res.sendFile(path.join(__dirname, 'html', 'signup.html'));
+  // Serve the signup.html page from the public/html directory
+  res.sendFile(path.join(__dirname, 'public', 'html', 'signup.html'));
 });
 
 // Route for sign-in page
 app.get('/signin', (req, res) => {
-  // Serve the signin.html page from the html directory
-  res.sendFile(path.join(__dirname, 'html', 'signin.html'));
+  // Serve the signin.html page from the public/html directory
+  res.sendFile(path.join(__dirname, 'public', 'html', 'signin.html'));
 });
 
 // Start the server
