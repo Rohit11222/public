@@ -1,7 +1,5 @@
-// Import necessary modules
 const express = require('express');
 const app = express();
-const path = require('path'); // Import the path module
 
 // Import necessary middleware and configuration
 const { auth } = require('express-openid-connect');
@@ -27,14 +25,14 @@ app.get('/', (req, res) => {
 
 // Route for sign-up page
 app.get('/signup', (req, res) => {
-  // Serve the signup.html page from the public/html directory
-  res.sendFile(path.join(__dirname, 'public', 'html', 'signup.html'));
+  // Render the signup.html page
+  res.sendFile(__dirname + '/signup.html');
 });
 
 // Route for sign-in page
 app.get('/signin', (req, res) => {
-  // Serve the signin.html page from the public/html directory
-  res.sendFile(path.join(__dirname, 'public', 'html', 'signin.html'));
+  // Render the signin.html page
+  res.sendFile(__dirname + '/signin.html');
 });
 
 // Start the server
