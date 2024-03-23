@@ -22,6 +22,21 @@ app.get('/', (req, res) => {
   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
+// Handle /login route with query parameters
+app.get('/login', (req, res) => {
+  // Check if a query parameter 'signup' is present
+  const isSignup = req.query.signup === 'true';
+  if (isSignup) {
+    // Handle signup logic
+    // For example, redirect to a signup page
+    res.redirect('/signup');
+  } else {
+    // Handle regular login logic
+    // For example, render a login form
+    res.render('login');
+  }
+});
+
 // Start the Express server
 const PORT = process.env.PORT || 443;
 app.listen(PORT, () => {
