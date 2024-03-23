@@ -1,51 +1,37 @@
 const express = require('express');
-const path = require('path');
 const { auth } = require('express-openid-connect');
-require('dotenv').config(); // Load environment variables
+const serverless = require('serverless-http');
+const path = require('path');
 
 const app = express();
 
-// Configuration for Auth0
+// Config for express-openid-connect middleware
 const config = {
   authRequired: false,
   auth0Logout: true,
-  secret: process.env.SECRET, // Fetch secret from environment variables
-  baseURL: 'https://dev-ddeie1zcfk1vp015.us.auth0.com',
-  clientID: 'YOUR_CLIENT_ID', // Replace with your Auth0 client ID
+  secret: process.env.SECRET,
+  baseURL: 'https://www.buzzrafters.com', // Your custom domain
+  clientID: 'j3MKg4otkGpOZpzQyHg9ThYsxy72QVIx',
   issuerBaseURL: 'https://dev-ddeie1zcfk1vp015.us.auth0.com'
 };
 
-// Apply Auth0 middleware
+// Auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
-// Serve HTML pages
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'html', 'index.html'));
+// Route for handling the authentication callback
+app.get('/callback', (req, res) => {
+  // Handle the authentication callback
+  // Redirect the user to the upload.html page after successful authentication
+  res.redirect('/upload.html');
 });
 
-app.get('/signup', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'html', 'signup.html'));
+// Serve the static files (HTML, CSS, JS) from the 'public' folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Catch-all route for client-side routing
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.get('/signin', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'html', 'signin.html'));
-});
-
-// Route to initiate authentication flow with Auth0
-app.get('/auth/signup', (req, res) => {
-  // Redirect users to Auth0 signup page
-  res.redirect('/login');
-});
-
-// Route to handle authentication callback from Auth0
-app.get('/auth/callback', (req, res) => {
-  // Handle authentication callback from Auth0
-  // Validate tokens/user information, create session, etc.
-  // Redirect user back to your website
-  res.redirect('/');
-});
-
-// Start the server
-app.listen(() => {
-  console.log(`Server is running`);
-});
+// Export the Express app as a Lambda function
+exports.handler = serverless(app);

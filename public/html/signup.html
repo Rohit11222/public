@@ -4,9 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up</title>
+  <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-  <h1>Sign Up</h1>
-  <a href="/auth/signup">Sign Up with Auth0</a>
+  <header>
+    <h1>Sign Up</h1>
+  </header>
+  <main>
+    <section>
+      <h2>Create an Account</h2>
+      <button id="sign-up-btn">Sign Up</button>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 Your Website. All rights reserved.</p>
+  </footer>
+  <script>
+    const signUpBtn = document.getElementById('sign-up-btn');
+
+    signUpBtn.addEventListener('click', () => {
+      // Redirect the user to the Auth0 Universal Login Page for sign-up
+      window.location.href = '/login?signup=true';
+    });
+  </script>
 </body>
 </html>
