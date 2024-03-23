@@ -17,24 +17,32 @@ const config = {
 // Adding authentication middleware to Express app
 app.use(auth(config));
 
+// Serve static files (e.g., HTML, CSS, JavaScript)
+app.use(express.static('public'));
+
 // Define your application routes
-app.get('/', (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+// Route to serve the signup page
+app.get('/signup', (req, res) => {
+  res.sendFile(__dirname + '/public/signup.html');
 });
 
-// Handle /login route with query parameters
-app.get('/login', (req, res) => {
-  // Check if a query parameter 'signup' is present
-  const isSignup = req.query.signup === 'true';
-  if (isSignup) {
-    // Handle signup logic
-    // For example, redirect to a signup page
-    res.redirect('/signup');
-  } else {
-    // Handle regular login logic
-    // For example, render a login form
-    res.render('login');
-  }
+// Route to serve the signin page
+app.get('/signin', (req, res) => {
+  res.sendFile(__dirname + '/public/signin.html');
+});
+
+// Route to handle form submission for signup
+app.post('/signup', (req, res) => {
+  // Handle form submission for signup
+  // For example, process form data and create a new user account
+  res.send('Signup successful');
+});
+
+// Route to handle form submission for signin
+app.post('/signin', (req, res) => {
+  // Handle form submission for signin
+  // For example, validate credentials and authenticate the user
+  res.send('Signin successful');
 });
 
 // Start the Express server
