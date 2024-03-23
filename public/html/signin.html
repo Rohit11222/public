@@ -1,31 +1,19 @@
+<!-- signin.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign In</title>
-  <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-  <header>
-    <h1>Sign In</h1>
-  </header>
-  <main>
-    <section>
-      <h2>Log In to Your Account</h2>
-      <button id="sign-in-btn">Sign In</button>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2024 Your Website. All rights reserved.</p>
-  </footer>
-  <script>
-    const signInBtn = document.getElementById('sign-in-btn');
+  <h1>Sign In Page</h1>
+  <button onclick="redirectToSignIn()">Sign In</button>
 
-    signInBtn.addEventListener('click', () => {
-      // Redirect the user to the Auth0 Universal Login Page for sign-in
-      window.location.href = '/login';
-    });
+  <script>
+    function redirectToSignIn() {
+      window.location.href = "/signin";
+    }
   </script>
 </body>
 </html>
