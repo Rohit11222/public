@@ -1,7 +1,11 @@
 // Import Firebase SDK
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js';
-import { getStorage, ref, listAll, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
+import { getStorage, ref, listAll, getDownloadURL, uploadBytes } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
 import { getDatabase } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
+import Plyr from 'plyr';
+
+// Import Auth0 SDK
+import { Auth0Client } from 'https://cdn.auth0.com/js/auth0/9.17/auth0.min.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,7 +22,13 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
-window.onload = function() {
+window.onload = async function() {
+  // Initialize Auth0 client
+  const auth0 = new Auth0Client({
+    domain: 'dev-ddeie1zcfk1vp015.us.auth0.com',
+    clientId: 'ybnaHQ7VNndMqjDYnp5vKOo7fe3DVfSx'
+  });
+
   const player = new Plyr('#player');
 
   // Initialize Firebase Storage
@@ -32,12 +42,20 @@ window.onload = function() {
 
   // Function to handle file upload
   if (uploadForm && videoFileInput) {
-    uploadForm.addEventListener('submit', function(event) {
+    uploadForm.addEventListener('submit', async function(event) {
       event.preventDefault();
 
       const file = videoFileInput.files[0];
       if (!file) {
         console.error('No file selected');
+        return;
+      }
+
+      // Check if user is authenticated with Auth0
+      const isAuthenticated = await auth0.isAuthenticated();
+      if (!isAuthenticated) {
+        // If not authenticated, redirect to login page
+        await auth0.loginWithRedirect();
         return;
       }
 
