@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to Your Website</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <script src="https://cdn.auth0.com/js/9.x/auth0.min.js"></script>
-  <script src="../js/auth0.js"></script>
-</head>
-<body>
-  <header>
-    <h1>Welcome to Your Website</h1>
-  </header>
-  <nav>
-    <ul>
-      <li><a href="html/signup.html">Sign Up</a></li>
-      <li><a href="html/signin.html">Sign In</a></li>
-      <li><a href="html/genre.html">Browse by Genre</a></li>
-    </ul>
-  </nav>
-  <main>
-    <section>
-      <h2>About Us</h2>
-      <p>Welcome to our website. Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-    </section>
-    <section>
-      <h2>Featured Videos</h2>
-      <div id="featuredVideos">
-        <!-- Add video thumbnails or other content here -->
-      </div>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2024 Your Website. All rights reserved.</p>
-  </footer>
-  <script src="https://cdn.plyr.io/3.7.3/plyr.js"></script>
-  <script src="js/script.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Your Website</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Include the Netlify Identity Widget script -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="js/auth.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Welcome to Your Website</h1>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="html/signup.html">Sign Up</a></li>
+        <li><a href="html/signin.html">Sign In</a></li>
+        <li><a href="html/genre.html">Browse by Genre</a></li>
+      </ul>
+    </nav>
+    <main>
+      <section>
+        <h2>About Us</h2>
+        <p>Welcome to our website. Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+      </section>
+      <section>
+        <h2>Featured Videos</h2>
+        <div id="featuredVideos">
+          <!-- Add video thumbnails or other content here -->
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2024 Your Website. All rights reserved.</p>
+    </footer>
+    <script src="https://cdn.plyr.io/3.7.3/plyr.js"></script>
+    <script src="js/script.js"></script>
+  </body>
 </html>
