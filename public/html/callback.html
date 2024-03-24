@@ -3,19 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign In</title>
+  <title>Callback</title>
   <script src="https://cdn.auth0.com/js/9.x/auth0.min.js"></script>
   <script src="auth0.js"></script>
 </head>
 <body>
-  <h1>Sign In</h1>
-  <button id="signInBtn">Sign In</button>
-
-  <script>
-    const signInBtn = document.getElementById('signInBtn');
-    signInBtn.addEventListener('click', () => {
-      auth0.authorize();
-    });
-  </script>
+  <!-- This page will handle the authentication callback from Auth0 -->
 </body>
 </html>

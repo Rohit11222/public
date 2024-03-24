@@ -1,50 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Upload Page</title>
-    <!-- Include Firebase JavaScript SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js"></script>
-    <!-- Include your custom script -->
-    <script src="js/script.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Upload Page</title>
+  <!-- Include Firebase JavaScript SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js"></script>
+  <!-- Include Auth0 JavaScript library -->
+  <script src="https://cdn.auth0.com/js/9.x/auth0.min.js"></script>
+  <!-- Include your custom script -->
+  <script src="js/script.js"></script>
+  <!-- Include auth0.js -->
+  <script src="auth0.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Video Upload Page</h1>
-    </header>
+  <header>
+    <h1>Video Upload Page</h1>
+  </header>
+  <main>
+    <section>
+      <h2>Upload Your Video</h2>
+      <div id="userProfile"></div>
+      <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="videoFile" id="videoFile" accept="video/*">
+        <button type="submit" id="uploadBtn" disabled>Upload Video</button>
+      </form>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 Your Website. All rights reserved.</p>
+  </footer>
+  <script>
+    // Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
+      authDomain: "buzzrafters-a3e2b.firebaseapp.com",
+      databaseURL: "https://buzzrafters-a3e2b-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "buzzrafters-a3e2b",
+      storageBucket: "buzzrafters-a3e2b.appspot.com",
+      messagingSenderId: "970830986248",
+      appId: "1:970830986248:web:5d311e15c3031759a5e5bd",
+      measurementId: "G-4W0PT6G2D4"
+    };
 
-    <main>
-        <section>
-            <h2>Upload Your Video</h2>
-            <form id="uploadForm" enctype="multipart/form-data">
-                <input type="file" name="videoFile" id="videoFile" accept="video/*">
-                <button type="submit">Upload Video</button>
-            </form>
-        </section>
-    </main>
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
 
-    <footer>
-        <p>&copy; 2024 Your Website. All rights reserved.</p>
-    </footer>
+    // Get a reference to the Firebase Storage service
+    const storage = firebase.storage();
 
-    <script>
-        // Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
-  authDomain: "buzzrafters-a3e2b.firebaseapp.com",
-  databaseURL: "https://buzzrafters-a3e2b-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "buzzrafters-a3e2b",
-  storageBucket: "buzzrafters-a3e2b.appspot.com",
-  messagingSenderId: "970830986248",
-  appId: "1:970830986248:web:5d311e15c3031759a5e5bd",
-  measurementId: "G-4W0PT6G2D4"
-};
+    // Check if the user is authenticated
+    if (isAuthenticated()) {
+      // User is authenticated, fetch and display their profile
+      getUserProfile().then(userProfile => {
+        if (userProfile) {
+          const userProfileDiv = document.getElementById('userProfile');
+          userProfileDiv.textContent = `Welcome, ${userProfile.name}!`;
+          document.getElementById('uploadBtn').disabled = false;
+        } else {
+          const userProfileDiv = document.getElementById('userProfile');
+          userProfileDiv.textContent = 'Failed to fetch user profile.';
+        }
+      });
+    } else {
+      // User is not authenticated, redirect to the sign-in page
+      window.location.href = '/signin.html';
+    }
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-    </script>
+    // Add event listener to the upload form
+    const uploadForm = document.getElementById('uploadForm');
+    uploadForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const videoFile = document.getElementById('videoFile').files[0];
+      if (videoFile) {
+        const videoRef = storage.ref().child(`videos/${videoFile.name}`);
+        const uploadTask = videoRef.put(videoFile);
+
+        uploadTask.on('state_changed',
+          (snapshot) => {
+            // Upload progress
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log(`Upload is ${progress}% done`);
+          },
+          (error) => {
+            // Upload error
+            console.error('Error uploading video:', error);
+          },
+          () => {
+            // Upload completed
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              console.log('Video uploaded successfully:', downloadURL);
+              // You can perform additional actions with the downloadURL here
+            });
+          }
+        );
+      }
+    });
+  </script>
 </body>
 </html>

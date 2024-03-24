@@ -4,12 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up</title>
+  <script src="https://cdn.auth0.com/js/9.x/auth0.min.js"></script>
+  <script src="auth0.js"></script>
 </head>
 <body>
-  <h1>Sign Up Page</h1>
-  <button onclick="signup()">Sign Up</button>
+  <h1>Sign Up</h1>
+  <button id="signUpBtn">Sign Up</button>
 
-  <script src="https://cdn.auth0.com/js/auth0/9.17/auth0.min.js"></script>
-  <script src="script.js"></script>
+  <script>
+    const signUpBtn = document.getElementById('signUpBtn');
+    signUpBtn.addEventListener('click', () => {
+      auth0.authorize({ mode: 'signUp' });
+    });
+  </script>
 </body>
 </html>
