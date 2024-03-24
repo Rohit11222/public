@@ -17,7 +17,7 @@ netlifyIdentity.on('login', () => {
 
 // Handle user logout
 netlifyIdentity.on('logout', () => {
-  // Handle logout logic if needed
+  window.location.href = 'index.html';// Handle logout logic if needed
 });
 
 // Open the signup modal
