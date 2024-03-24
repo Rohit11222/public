@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Upload Page</title>
     <!-- Include Firebase JavaScript SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js"></script>
 </head>
 <body>
     <header>
@@ -27,7 +27,10 @@
     <script>
         // Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-       // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js';
+        import { getStorage } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
+
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
   authDomain: "buzzrafters-a3e2b.firebaseapp.com",
@@ -40,8 +43,8 @@ const firebaseConfig = {
 };
 
         // Initialize Firebase
-        const firebaseApp = firebase.initializeApp(firebaseConfig);
-        const storage = firebase.storage();
+        const firebaseApp = initializeApp(firebaseConfig);
+        const storage = getStorage(firebaseApp);
 
         // Add event listener to the upload form
         const uploadForm = document.getElementById('uploadForm');
