@@ -12,7 +12,7 @@ netlifyIdentity.init({
 // Handle user login
 netlifyIdentity.on('login', () => {
   // Redirect to the upload.html page after successful sign-in
-  window.location.href = 'upload.html';
+  window.location.href = 'html/upload.html';
 });
 
 // Handle user logout
