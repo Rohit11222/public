@@ -4,9 +4,6 @@ import { getStorage, ref, listAll, getDownloadURL, uploadBytes } from 'https://w
 import { getDatabase } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
 import Plyr from 'plyr';
 
-// Import Auth0 SDK
-import { Auth0Client } from 'https://cdn.auth0.com/js/auth0/9.17/auth0.min.js';
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
@@ -23,12 +20,6 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 window.onload = async function() {
-  // Initialize Auth0 client
-  const auth0 = new Auth0Client({
-    domain: 'dev-ddeie1zcfk1vp015.us.auth0.com',
-    clientId: 'ybnaHQ7VNndMqjDYnp5vKOo7fe3DVfSx'
-  });
-
   const player = new Plyr('#player');
 
   // Initialize Firebase Storage
@@ -48,14 +39,6 @@ window.onload = async function() {
       const file = videoFileInput.files[0];
       if (!file) {
         console.error('No file selected');
-        return;
-      }
-
-      // Check if user is authenticated with Auth0
-      const isAuthenticated = await auth0.isAuthenticated();
-      if (!isAuthenticated) {
-        // If not authenticated, redirect to login page
-        await auth0.loginWithRedirect();
         return;
       }
 
@@ -100,9 +83,6 @@ window.onload = async function() {
   function fetchSongsByGenre(genre) {
     // Reference to the Firebase Storage bucket where your songs are stored
     const storageRef = ref(storage, 'songs');
-
-    // Reference to the Firebase Realtime Database (not needed for this functionality)
-    const database = getDatabase(firebaseApp);
 
     // Path to the folder where songs of the selected genre are stored
     const genreFolderRef = ref(storage, `songs/${genre}`);
