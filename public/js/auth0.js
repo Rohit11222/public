@@ -7,7 +7,7 @@ const signUpButton = document.getElementById('signUpButton');
 
 // Initialize the widget with your site's URL
 netlifyIdentity.init({
-  netlifyUrl: 'https://buzzrafters.com',
+  netlifyUrl: 'https://buzzrafters.netlify.app',
 });
 
 // Handle user login
