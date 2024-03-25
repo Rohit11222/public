@@ -2,7 +2,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js';
 import { getStorage, ref, listAll, getDownloadURL, uploadBytes } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
 import { getDatabase } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
-import Plyr from 'https://cdn.plyr.io/3.7.3/plyr.js';
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
