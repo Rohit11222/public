@@ -1,8 +1,5 @@
-// Import Firebase SDK
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js';
-import { getStorage, ref, listAll, getDownloadURL, uploadBytes } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
-import { getDatabase } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
-
+import { getStorage, ref, listAll, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -26,58 +23,15 @@ window.onload = async function() {
  const storage = getStorage(firebaseApp);
 
  // Get references to DOM elements
- const uploadForm = document.getElementById('uploadForm');
- const videoFileInput = document.getElementById('videoFile');
- const genreDropdown = document.getElementById('genreDropdown');
- const songList = document.getElementById('songList');
-
- // Function to handle file upload
- if (uploadForm && videoFileInput) {
-   uploadForm.addEventListener('submit', async function(event) {
-     event.preventDefault();
-
-     const file = videoFileInput.files[0];
-     if (!file) {
-       console.error('No file selected');
-       return;
-     }
-
-     // Create a storage reference
-     const storageRef = ref(storage, `videos/${file.name}`);
-
-     // Upload the file to Firebase Storage
-     const uploadTask = uploadBytes(storageRef, file);
-
-     // Monitor upload progress
-     uploadTask.on('state_changed',
-       function(snapshot) {
-         // Handle progress
-         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-         console.log('Upload progress:', progress);
-       },
-       function(error) {
-         // Handle errors
-         console.error('Error uploading file:', error);
-       },
-       function() {
-         // Handle successful upload
-         console.log('File uploaded successfully');
-
-         // Get the download URL for the uploaded file
-         getDownloadURL(uploadTask.snapshot.ref).then(function(downloadURL) {
-           // Redirect to the genre.html page with the download URL as a query parameter
-           window.location.href = `genre.html?videoUrl=${encodeURIComponent(downloadURL)}`;
-         });
-       }
-     );
-   });
- }
+ const genreDropdown = document.getElementById('genreDropdown'); // Updated selector
 
  // Function to handle genre selection
- genreDropdown.addEventListener('change', function() {
-   const selectedGenre = genreDropdown.value;
-   fetchSongsByGenre(selectedGenre);
- });
+ if (genreDropdown) { // Ensure the element exists
+   genreDropdown.addEventListener('change', function() {
+     const selectedGenre = genreDropdown.value;
+     fetchSongsByGenre(selectedGenre);
+   });
+ }
 
  // Function to fetch songs by genre from Firebase Storage
  function fetchSongsByGenre(genre) {
@@ -109,6 +63,9 @@ window.onload = async function() {
 
  // Function to display the list of songs
  function displaySongs(songs) {
+   const songList = document.getElementById('songList');
+   if (!songList) return; // Ensure the element exists
+
    songList.innerHTML = '';
 
    songs.forEach(songUrl => {
@@ -119,13 +76,5 @@ window.onload = async function() {
      songItem.appendChild(audio);
      songList.appendChild(songItem);
    });
- }
-
- // Get the video URL from the query parameter and set it as the source for the video player
- const urlParams = new URLSearchParams(window.location.search);
- const videoUrl = urlParams.get('videoUrl');
- if (videoUrl) {
-   const videoPlayer = document.getElementById('player');
-   videoPlayer.src = decodeURIComponent(videoUrl);
  }
 };
