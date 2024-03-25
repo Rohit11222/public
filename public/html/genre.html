@@ -40,23 +40,23 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Get the video URL from the query parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const videoUrl = urlParams.get('videoUrl');
+      // Get the video URL from the query parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const videoUrl = urlParams.get('videoUrl');
 
-        // Set the video URL as the source for the Plyr video player
-        if (videoUrl) {
-          const player = new Plyr('#player');
-          player.source = {
-            type: 'video',
-            sources: [
-              {
-                src: decodeURIComponent(videoUrl),
-                type: 'video/mp4',
-              },
-            ],
-          };
-        }
+      // Set the video URL as the source for the Plyr video player
+      if (videoUrl) {
+        const player = new Plyr('#player');
+        player.source = {
+          type: 'video',
+          sources: [
+            {
+              src: decodeURIComponent(videoUrl),
+              type: 'video/mp4',
+            },
+          ],
+        };
+      }
     });
   </script>
 </body>
