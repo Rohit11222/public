@@ -17,6 +17,7 @@
       <h2>Upload Your Video</h2>
       <form id="uploadForm" enctype="multipart/form-data">
         <input type="file" name="videoFile" id="videoFile" accept="video/*">
+        <input type="hidden" id="downloadURL" name="downloadURL">
         <button type="submit" id="uploadBtn">Upload Video</button>
       </form>
     </section>
@@ -29,19 +30,17 @@
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
     import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js';
 
-   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
-  authDomain: "buzzrafters-a3e2b.firebaseapp.com",
-  databaseURL: "https://buzzrafters-a3e2b-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "buzzrafters-a3e2b",
-  storageBucket: "buzzrafters-a3e2b.appspot.com",
-  messagingSenderId: "970830986248",
-  appId: "1:970830986248:web:5d311e15c3031759a5e5bd",
-  measurementId: "G-4W0PT6G2D4"
-};
-
     // Initialize Firebase
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      databaseURL: "YOUR_DATABASE_URL",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID",
+      measurementId: "YOUR_MEASUREMENT_ID"
+    };
     const app = initializeApp(firebaseConfig);
     const storage = getStorage(app);
 
@@ -69,7 +68,8 @@ const firebaseConfig = {
             getDownloadURL(uploadTask.snapshot.ref)
               .then((downloadURL) => {
                 console.log('Video uploaded successfully:', downloadURL);
-                // You can perform additional actions with the downloadURL here
+                // Set download URL to hidden input field
+                document.getElementById('downloadURL').value = downloadURL;
               })
               .catch((error) => {
                 console.error('Error getting download URL:', error);
@@ -77,6 +77,14 @@ const firebaseConfig = {
           }
         );
       }
+    });
+
+    // Function to handle click on "Upload" button
+    document.getElementById('uploadBtn').addEventListener('click', function() {
+      // Get the download URL from the hidden input field
+      const downloadURL = document.getElementById('downloadURL').value;
+      // Redirect to genre.html with download URL as query parameter
+      window.location.href = `genre.html?videoUrl=${encodeURIComponent(downloadURL)}`;
     });
   </script>
 </body>
