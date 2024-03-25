@@ -65,6 +65,8 @@
                     uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
                         console.log('Video uploaded successfully:', downloadURL);
                         // You can perform additional actions with the downloadURL here
+                    }).catch((error) => {
+                        console.error('Error getting download URL:', error);
                     });
                 });
             }
