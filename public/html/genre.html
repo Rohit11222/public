@@ -17,7 +17,7 @@
       <video id="player" controls></video>
     </section>
     <div class="genre-dropdown-container">
-      <select class="genre-dropdown" id="genreDropdown">
+      <select class="genre-dropdown" id="dropdown">
         <option value="pop">pop</option>
         <option value="hiphop">hiphop</option>
         <option value="cinematic">cinematic</option>
@@ -32,11 +32,11 @@
     <p>&copy; 2024 Your Website. All rights reserved.</p>
   </footer>
 
-  <!-- Include your custom script -->
-  <script type="module" src="../js/script.js"></script>
-
   <!-- Include Plyr script -->
   <script src="https://cdn.plyr.io/3.7.3/plyr.js"></script>
+
+  <!-- Include your custom script -->
+  <script type="module" src="../js/script.js"></script>
 
   <script>
     // Get the video URL from the query parameter
@@ -48,10 +48,12 @@
       const player = new Plyr('#player');
       player.source = {
         type: 'video',
-        sources: [{
-          src: decodeURIComponent(videoUrl),
-          type: 'video/mp4',
-        }],
+        sources: [
+          {
+            src: decodeURIComponent(videoUrl),
+            type: 'video/mp4',
+          },
+        ],
       };
     }
   </script>
