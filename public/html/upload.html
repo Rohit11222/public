@@ -17,9 +17,11 @@
       <h2>Upload Your Video</h2>
       <form id="uploadForm" enctype="multipart/form-data">
         <input type="file" name="videoFile" id="videoFile" accept="video/*">
-        <input type="hidden" id="downloadURL" name="downloadURL">
         <button type="submit" id="uploadBtn">Upload Video</button>
       </form>
+    </section>
+    <section id="uploadControls" style="display: none;">
+      <button id="goToGenreBtn">Go to Genre Page</button>
     </section>
   </main>
   <footer>
@@ -47,6 +49,7 @@ const firebaseConfig = {
 
     // Add event listener to the upload form
     const uploadForm = document.getElementById('uploadForm');
+    const uploadControls = document.getElementById('uploadControls');
     uploadForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       const videoFile = document.getElementById('videoFile').files[0];
@@ -69,8 +72,10 @@ const firebaseConfig = {
             getDownloadURL(uploadTask.snapshot.ref)
               .then((downloadURL) => {
                 console.log('Video uploaded successfully:', downloadURL);
-                // Set download URL to hidden input field
-                document.getElementById('downloadURL').value = downloadURL;
+                // Show the upload controls section
+                uploadControls.style.display = 'block';
+                // Store download URL in local storage
+                localStorage.setItem('downloadURL', downloadURL);
               })
               .catch((error) => {
                 console.error('Error getting download URL:', error);
@@ -80,10 +85,10 @@ const firebaseConfig = {
       }
     });
 
-    // Function to handle click on "Upload" button
-    document.getElementById('uploadBtn').addEventListener('click', function() {
-      // Get the download URL from the hidden input field
-      const downloadURL = document.getElementById('downloadURL').value;
+    // Add event listener to the "Go to Genre Page" button
+    document.getElementById('goToGenreBtn').addEventListener('click', function() {
+      // Get the download URL from local storage
+      const downloadURL = localStorage.getItem('downloadURL');
       // Redirect to genre.html with download URL as query parameter
       window.location.href = `genre.html?videoUrl=${encodeURIComponent(downloadURL)}`;
     });
