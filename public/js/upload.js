@@ -2,20 +2,20 @@ import firebase from 'firebase/app';
 import 'firebase/storage';
 import netlifyIdentity from 'netlify-identity-widget';
 
-// Initialize Firebase
+// Your Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
-    authDomain: "buzzrafters-a3e2b.firebaseapp.com",
-    databaseURL: "https://buzzrafters-a3e2b-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "buzzrafters-a3e2b",
-    storageBucket: "buzzrafters-a3e2b.appspot.com",
-    messagingSenderId: "970830986248",
-    appId: "1:970830986248:web:5d311e15c3031759a5e5bd",
-    measurementId: "G-4W0PT6G2D4"
-  };
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+  apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
+  authDomain: "buzzrafters-a3e2b.firebaseapp.com",
+  databaseURL: "https://buzzrafters-a3e2b-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "buzzrafters-a3e2b",
+  storageBucket: "buzzrafters-a3e2b.appspot.com",
+  messagingSenderId: "970830986248",
+  appId: "1:970830986248:web:5d311e15c3031759a5e5bd",
+  measurementId: "G-4W0PT6G2D4"
+};
 
-// Get a reference to the Firebase Storage service
+// Initialize Firebase
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
 
 // Add event listener to the upload form
