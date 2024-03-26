@@ -57,6 +57,12 @@
           ],
         };
       }
+
+      // Set the video URL as the source for the regular video player
+      const videoPlayer = document.getElementById('player');
+      if (videoUrl && videoPlayer) {
+        videoPlayer.src = decodeURIComponent(videoUrl);
+      }
     });
   </script>
 </body>
