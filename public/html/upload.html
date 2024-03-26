@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Video Upload Page</title>
   <link rel="stylesheet" href="../css/styles.css">
-  <!-- Include Netlify Identity Widget -->
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <!-- Include Firebase JavaScript SDK -->
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"></script>
 </head>
 <body>
   <header style="background-color: white;">
@@ -23,7 +25,57 @@
   <footer id="samosa">
     <p>&copy; 2024 Your Website. All rights reserved.</p>
   </footer>
-  <!-- Include your custom JavaScript file -->
-  <script type="module" src="../js/upload.js"></script>
+  <script type="module">
+    // Firebase configuration
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+    import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js';
+    // Initialize Firebase
+   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+	const firebaseConfig = {
+	  apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
+	  authDomain: "buzzrafters-a3e2b.firebaseapp.com",
+	  databaseURL: "https://buzzrafters-a3e2b-default-rtdb.asia-southeast1.firebasedatabase.app",
+	  projectId: "buzzrafters-a3e2b",
+	  storageBucket: "buzzrafters-a3e2b.appspot.com",
+	  messagingSenderId: "970830986248",
+	  appId: "1:970830986248:web:5d311e15c3031759a5e5bd",
+	  measurementId: "G-4W0PT6G2D4"
+	};
+    const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app);
+    // Add event listener to the upload form
+    const uploadForm = document.getElementById('uploadForm');
+    uploadForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const videoFile = document.getElementById('videoFile').files[0];
+      if (videoFile) {
+        const videoRef = ref(storage, `videos/${videoFile.name}`);
+        const uploadTask = uploadBytesResumable(videoRef, videoFile);
+        uploadTask.on('state_changed',
+          (snapshot) => {
+            // Upload progress
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log(`Upload is ${progress}% done`);
+          },
+          (error) => {
+            // Upload error
+            console.error('Error uploading video:', error);
+          },
+          () => {
+            // Upload completed
+            getDownloadURL(uploadTask.snapshot.ref)
+              .then((downloadURL) => {
+                console.log('Video uploaded successfully:', downloadURL);
+                // Redirect to genre.html with download URL as query parameter
+                window.location.href = `genre.html?videoUrl=${encodeURIComponent(downloadURL)}`;
+              })
+              .catch((error) => {
+                console.error('Error getting download URL:', error);
+              });
+          }
+        );
+      }
+    });
+  </script>
 </body>
 </html>
