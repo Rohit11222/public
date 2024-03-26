@@ -34,10 +34,8 @@
 
   <!-- Include Plyr script -->
   <script src="https://cdn.plyr.io/3.7.3/plyr.js"></script>
-
   <!-- Include your custom script -->
   <script type="module" src="../js/script.js"></script>
-
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Get the video URL from the query parameter
@@ -46,22 +44,11 @@
 
       // Set the video URL as the source for the Plyr video player
       if (videoUrl) {
-        const player = new Plyr('#player');
-        player.source = {
-          type: 'video',
+        const player = new Plyr('#player', {
           sources: [
-            {
-              src: decodeURIComponent(videoUrl),
-              type: 'video/mp4',
-            },
-          ],
-        };
-      }
-
-      // Set the video URL as the source for the regular video player
-      const videoPlayer = document.getElementById('player');
-      if (videoUrl && videoPlayer) {
-        videoPlayer.src = decodeURIComponent(videoUrl);
+            { src: decodeURIComponent(videoUrl) }
+          ]
+        });
       }
     });
   </script>
