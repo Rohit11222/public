@@ -3,7 +3,6 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase
 import { getStorage, ref, listAll, getDownloadURL, uploadBytes } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
 import { getDatabase } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
 
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
@@ -19,19 +18,27 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
-window.onload = async function() {
+// Function to handle the script logic
+function handleScriptLogic() {
   const player = new Plyr('#player');
 
   // Initialize Firebase Storage
   const storage = getStorage(firebaseApp);
 
   // Get references to DOM elements
-  const dropdown = document.getElementById('dropdown');
+  const genreDropdown = document.getElementById('dropdown');
   const songList = document.getElementById('songList');
+  const videoPlayer = document.getElementById('player');
+
+  // Check if the required elements exist before proceeding
+  if (!genreDropdown || !songList || !videoPlayer) {
+    console.error('One or more required elements are missing from the DOM.');
+    return;
+  }
 
   // Function to handle genre selection
-  dropdown.addEventListener('change', function() {
-    const selectedGenre = dropdown.value;
+  genreDropdown.addEventListener('change', function() {
+    const selectedGenre = genreDropdown.value;
     fetchSongsByGenre(selectedGenre);
   });
 
@@ -80,8 +87,10 @@ window.onload = async function() {
   // Get the video URL from the query parameter and set it as the source for the video player
   const urlParams = new URLSearchParams(window.location.search);
   const videoUrl = urlParams.get('videoUrl');
-  if (videoUrl) {
-    const videoPlayer = document.getElementById('player');
+  if (videoUrl && videoPlayer) {
     videoPlayer.src = decodeURIComponent(videoUrl);
   }
-};
+}
+
+// Wait for the DOM to be fully loaded before executing the script logic
+document.addEventListener('DOMContentLoaded', handleScriptLogic);
