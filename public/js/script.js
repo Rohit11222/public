@@ -3,23 +3,23 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase
 import { getStorage, ref, listAll, getDownloadURL, uploadBytes } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
 import { getDatabase } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
 
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  databaseURL: "YOUR_DATABASE_URL",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID"
+  apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
+  authDomain: "buzzrafters-a3e2b.firebaseapp.com",
+  databaseURL: "https://buzzrafters-a3e2b-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "buzzrafters-a3e2b",
+  storageBucket: "buzzrafters-a3e2b.appspot.com",
+  messagingSenderId: "970830986248",
+  appId: "1:970830986248:web:5d311e15c3031759a5e5bd",
+  measurementId: "G-4W0PT6G2D4"
 };
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
 window.onload = async function() {
-  // Initialize Plyr player
   const player = new Plyr('#player');
 
   // Initialize Firebase Storage
