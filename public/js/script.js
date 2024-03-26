@@ -36,6 +36,13 @@ function handleScriptLogic() {
     return;
   }
 
+  // Get the video URL from the query parameter and set it as the source for the video player
+  const urlParams = new URLSearchParams(window.location.search);
+  const videoUrl = urlParams.get('videoUrl');
+  if (videoUrl && videoPlayer) {
+    videoPlayer.src = decodeURIComponent(videoUrl);
+  }
+
   // Function to handle genre selection
   genreDropdown.addEventListener('change', function() {
     const selectedGenre = genreDropdown.value;
@@ -73,7 +80,6 @@ function handleScriptLogic() {
   // Function to display the list of songs
   function displaySongs(songs) {
     songList.innerHTML = '';
-
     songs.forEach(songUrl => {
       const songItem = document.createElement('div');
       const audio = document.createElement('audio');
@@ -82,13 +88,6 @@ function handleScriptLogic() {
       songItem.appendChild(audio);
       songList.appendChild(songItem);
     });
-  }
-
-  // Get the video URL from the query parameter and set it as the source for the video player
-  const urlParams = new URLSearchParams(window.location.search);
-  const videoUrl = urlParams.get('videoUrl');
-  if (videoUrl && videoPlayer) {
-    videoPlayer.src = decodeURIComponent(videoUrl);
   }
 }
 
