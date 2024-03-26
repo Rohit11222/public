@@ -1,5 +1,5 @@
-import firebase from 'firebase/app';
-import 'firebase/storage';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+import { getStorage, ref, uploadBytes } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js';
 import netlifyIdentity from 'netlify-identity-widget';
 
 // Your Firebase configuration
@@ -15,8 +15,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const firebaseApp = firebase.initializeApp(firebaseConfig);
-const storage = firebase.storage();
+const firebaseApp = initializeApp(firebaseConfig);
+
+// Get a reference to the Firebase Storage service
+const storage = getStorage(firebaseApp);
 
 // Add event listener to the upload form
 const uploadForm = document.getElementById('uploadForm');
@@ -34,10 +36,10 @@ uploadForm.addEventListener('submit', async (event) => {
       const userToken = user.jwt;
 
       // Create a reference to the file in Firebase Storage
-      const fileRef = storage.ref(`videos/${videoFile.name}`);
+      const fileRef = ref(storage, `videos/${videoFile.name}`);
 
       // Upload the file with the user's authentication token
-      const uploadTask = await fileRef.put(videoFile, { customMetadata: { jwt: userToken } });
+      const uploadTask = await uploadBytes(fileRef, videoFile, { customMetadata: { jwt: userToken } });
 
       // Get the download URL of the uploaded file
       const downloadURL = await uploadTask.ref.getDownloadURL();
