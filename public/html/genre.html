@@ -23,7 +23,6 @@
         <option value="rock">rock</option>
       </select>
     </div>
-    </section>
     <section id="songList">
       <h2>Songs</h2>
     </section>
@@ -35,5 +34,15 @@
   <script src="https://cdn.plyr.io/3.7.3/plyr.js"></script>
   <!-- Include your custom script -->
   <script type="module" src="../js/script.js"></script>
+  <script>
+    // Initialize Netlify Identity
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', (user) => {
+        if (!user) {
+          window.netlifyIdentity.open();
+        }
+      });
+    }
+  </script>
 </body>
 </html>

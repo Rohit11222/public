@@ -1,27 +1,27 @@
 // Import Firebase SDK
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js';
 import { getStorage, ref, listAll, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
-import Plyr from 'https://cdn.plyr.io/3.7.3/plyr.js'; // Import Plyr library
+import { getDatabase } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
-  authDomain: "buzzrafters-a3e2b.firebaseapp.com",
-  databaseURL: "https://buzzrafters-a3e2b-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "buzzrafters-a3e2b",
-  storageBucket: "buzzrafters-a3e2b.appspot.com",
-  messagingSenderId: "970830986248",
-  appId: "1:970830986248:web:5d311e15c3031759a5e5bd",
-  measurementId: "G-4W0PT6G2D4"
+  apiKey: "<YOUR_API_KEY>",
+  authDomain: "<YOUR_AUTH_DOMAIN>",
+  databaseURL: "<YOUR_DATABASE_URL>",
+  projectId: "<YOUR_PROJECT_ID>",
+  storageBucket: "<YOUR_STORAGE_BUCKET>",
+  messagingSenderId: "<YOUR_MESSAGING_SENDER_ID>",
+  appId: "<YOUR_APP_ID>",
+  measurementId: "<YOUR_MEASUREMENT_ID>"
 };
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
-window.onload = async function() {
-  // Initialize Firebase Storage
-  const storage = getStorage(firebaseApp);
+// Initialize Firebase Storage
+const storage = getStorage(firebaseApp);
 
+window.onload = async function() {
   // Get references to DOM elements
   const dropdown = document.getElementById('dropdown');
   const songList = document.getElementById('songList');
