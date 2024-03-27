@@ -1,7 +1,7 @@
 // Import Firebase SDK
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js';
-import { getStorage, ref, listAll, getDownloadURL, uploadBytes } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
-import { getDatabase } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
+import { getStorage, ref, listAll, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
+import Plyr from 'https://cdn.plyr.io/3.7.3/plyr.js'; // Import Plyr library
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -81,6 +81,6 @@ window.onload = async function() {
     videoPlayer.src = decodeURIComponent(videoUrl);
 
     // Create a new instance of Plyr after setting the video source
-    const player = new Plyr('#player');
+    const player = new Plyr(videoPlayer);
   }
 };
