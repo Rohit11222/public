@@ -1,9 +1,4 @@
-// Import Firebase SDK
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js';
-import { getStorage, ref, listAll, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js';
-import { getDatabase } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
-
-// Your web app's Firebase configuration
+// Initialize Firebase
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCiqVDUshhfusWn5Z2b-4p2KVpsyLSNleI",
@@ -15,12 +10,10 @@ const firebaseConfig = {
   appId: "1:970830986248:web:5d311e15c3031759a5e5bd",
   measurementId: "G-4W0PT6G2D4"
 };
-
-// Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
 // Initialize Firebase Storage
-const storage = getStorage(firebaseApp);
+const storage = firebase.storage();
 
 window.onload = async function() {
   // Get references to DOM elements
@@ -37,16 +30,16 @@ window.onload = async function() {
   // Function to fetch songs by genre from Firebase Storage
   function fetchSongsByGenre(genre) {
     // Reference to the Firebase Storage bucket where your songs are stored
-    const storageRef = ref(storage, 'songs');
+    const storageRef = storage.ref('songs');
 
     // Path to the folder where songs of the selected genre are stored
-    const genreFolderRef = ref(storage, `songs/${genre}`);
+    const genreFolderRef = storage.ref(`songs/${genre}`);
 
     // Fetch the list of songs in the genre folder
-    listAll(genreFolderRef)
+    genreFolderRef.listAll()
       .then(function(res) {
         // Extract the download URLs of the songs
-        const songs = res.items.map(item => getDownloadURL(item));
+        const songs = res.items.map(item => item.getDownloadURL());
 
         // Once all download URLs are fetched, display the songs
         Promise.all(songs)
@@ -80,7 +73,6 @@ window.onload = async function() {
   const videoUrl = urlParams.get('videoUrl');
   if (videoUrl && videoPlayer) {
     videoPlayer.src = decodeURIComponent(videoUrl);
-
     // Create a new instance of Plyr after setting the video source
     const player = new Plyr(videoPlayer);
   }
