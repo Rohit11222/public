@@ -9,7 +9,7 @@
 </head>
 <body>
   <header class="site-header">
-    <h1 style="color: black;">Unleash Magic</h1>
+    <h1 style="color:black">Unleash Magic</h1>
   </header>
   <main>
     <section id="videoPlayerSection">
@@ -23,6 +23,7 @@
         <option value="rock">rock</option>
       </select>
     </div>
+    </section>
     <section id="songList">
       <h2>Songs</h2>
     </section>
@@ -30,39 +31,9 @@
   <footer id="samosa">
     <p class="copyright">&copy; 2024 Your Website. All rights reserved.</p>
   </footer>
-
   <!-- Include Plyr script -->
   <script src="https://cdn.plyr.io/3.7.3/plyr.js"></script>
-
   <!-- Include your custom script -->
   <script type="module" src="../js/script.js"></script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Get the video URL from the query parameter
-      const urlParams = new URLSearchParams(window.location.search);
-      const videoUrl = urlParams.get('videoUrl');
-
-      // Set the video URL as the source for the Plyr video player
-      if (videoUrl) {
-        const player = new Plyr('#player');
-        player.source = {
-          type: 'video',
-          sources: [
-            {
-              src: decodeURIComponent(videoUrl),
-              type: 'video/mp4',
-            },
-          ],
-        };
-      }
-
-      // Set the video URL as the source for the regular video player
-      const videoPlayer = document.getElementById('player');
-      if (videoUrl && videoPlayer) {
-        videoPlayer.src = decodeURIComponent(videoUrl);
-      }
-    });
-  </script>
 </body>
 </html>
