@@ -1,7 +1,6 @@
-import { createClient } from '@supabase/supabase-js';
-
+// Supabase initialization
 const supabaseUrl = 'https://laufbfkshegoiwlzebxb.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhdWZiZmtzaGVnb2l3bHplYnhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA5NDM0OTcsImV4cCI6MjAyNjUxOTQ5N30.oUSU5-OVIoTIOP1FgNHAUHlErGfbe6X_Joz9ipWGrT0';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhdWZiZmtzaGVnb2l3bHplYnhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA5NDM0OTcsImV4cCI6MjAyNjUxOTQ5N30.oUSU5-OVIoTIOP1FgNHAUHlErGfbe6X_Joz9ipWGrT0'; // Replace 'public-anon-key' with your actual Supabase public key
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Function to fetch songs by genre from Supabase
