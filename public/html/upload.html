@@ -25,9 +25,15 @@
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
 
     // Supabase initialization
-    const supabaseUrl = 'https://laufbfkshegoiwlzebxb.supabase.co';
+    const supabaseUrl = 'YOUR_CUSTOM_DOMAIN';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhdWZiZmtzaGVnb2l3bHplYnhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA5NDM0OTcsImV4cCI6MjAyNjUxOTQ5N30.oUSU5-OVIoTIOP1FgNHAUHlErGfbe6X_Joz9ipWGrT0';
     const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Service key or service role API key
+    const serviceKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhdWZiZmtzaGVnb2l3bHplYnhiIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMDk0MzQ5NywiZXhwIjoyMDI2NTE5NDk3fQ.pKix-wBr5OhFOLQ-cKXMZLzelTbDe3m4GwCzfajDmLk';
+
+    // Set the Authorization header with the service key
+    supabase.auth.setAuth(`Bearer ${serviceKey}`);
 
     const uploadForm = document.getElementById('uploadForm');
     uploadForm.addEventListener('submit', async (event) => {
