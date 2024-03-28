@@ -44,7 +44,7 @@
           // Upload the video file to Supabase Storage
           const { data, error } = await supabase.storage
             .from('videos')
-            .upload(`uploads/${videoFile.name}`, videoFile);
+            .upload(`videos/${videoFile.name}`, videoFile);
 
           if (error) {
             console.error('Error uploading video:', error);
