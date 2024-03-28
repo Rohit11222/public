@@ -6,8 +6,6 @@
   <title>Browse by Genre</title>
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.3/plyr.css">
-  <!-- Supabase Client Library -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 <body>
   <header class="site-header">
@@ -34,57 +32,6 @@
     <p class="copyright">&copy; 2024 Your Website. All rights reserved.</p>
   </footer>
   <script src="https://cdn.plyr.io/3.7.3/plyr.js"></script>
-  <script>
-    // Supabase initialization
-    const supabaseUrl = 'https://laufbfkshegoiwlzebxb.supabase.coL';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhdWZiZmtzaGVnb2l3bHplYnhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA5NDM0OTcsImV4cCI6MjAyNjUxOTQ5N30.oUSU5-OVIoTIOP1FgNHAUHlErGfbe6X_Joz9ipWGrT0';
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
-    const dropdown = document.getElementById('dropdown');
-    const songContainer = document.getElementById('songContainer');
-    const videoPlayer = document.getElementById('player');
-
-    // Function to fetch and display songs based on the selected genre
-    async function fetchSongsByGenre(genre) {
-      songContainer.innerHTML = ''; // Clear the previous song list
-
-      const { data, error } = await supabase.storage.from('songs').list(`${genre}/`);
-
-      if (error) {
-        console.error('Error fetching songs:', error);
-      } else {
-        data.forEach(file => {
-          const { publicURL } = supabase.storage.from('songs').getPublicUrl(file.name);
-          const songElement = document.createElement('div');
-          const audio = document.createElement('audio');
-          audio.src = publicURL;
-          audio.controls = true;
-          songElement.appendChild(audio);
-          songContainer.appendChild(songElement);
-        });
-      }
-    }
-
-    // Event listener for genre selection
-    dropdown.addEventListener('change', () => {
-      const selectedGenre = dropdown.value;
-      fetchSongsByGenre(selectedGenre);
-    });
-
-    window.onload = async function() {
-      // Get the video URL from the query parameter and set it as the source for the video player
-      const urlParams = new URLSearchParams(window.location.search);
-      const videoUrl = urlParams.get('videoUrl');
-      if (videoUrl && videoPlayer) {
-        videoPlayer.src = decodeURIComponent(videoUrl);
-        // Create a new instance of Plyr after setting the video source
-        const player = new Plyr(videoPlayer);
-      }
-
-      // Fetch and display songs for the initial genre
-      const initialGenre = dropdown.value;
-      fetchSongsByGenre(initialGenre);
-    };
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
