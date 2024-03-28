@@ -21,8 +21,40 @@
   <footer id="samosa">
     <p>&copy; 2024 Your Website. All rights reserved.</p>
   </footer>
-  <!-- Supabase Client Library -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../js/script.js"></script> <!-- Include your script file -->
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+
+    // Supabase initialization
+    const supabaseUrl = 'https://laufbfkshegoiwlzebxb.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhdWZiZmtzaGVnb2l3bHplYnhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA5NDM0OTcsImV4cCI6MjAyNjUxOTQ5N30.oUSU5-OVIoTIOP1FgNHAUHlErGfbe6X_Joz9ipWGrT0';
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    const uploadForm = document.getElementById('uploadForm');
+    uploadForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const videoFile = document.getElementById('videoFile').files[0];
+      if (videoFile) {
+        try {
+          // Upload the video file to Supabase Storage
+          const { data, error } = await supabase.storage
+            .from('videos')
+            .upload(`uploads/${videoFile.name}`, videoFile);
+
+          if (error) {
+            console.error('Error uploading video:', error);
+          } else {
+            // Get the public URL of the uploaded video
+            const { publicURL } = supabase.storage.from('videos').getPublicUrl(data.path);
+
+            console.log('Video uploaded successfully:', publicURL);
+            // Redirect to genre.html with the video URL as a query parameter
+            window.location.href = `genre.html?videoUrl=${encodeURIComponent(publicURL)}`;
+          }
+        } catch (error) {
+          console.error('Error during upload:', error);
+        }
+      }
+    });
+  </script>
 </body>
 </html>
